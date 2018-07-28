@@ -12,7 +12,7 @@ const port = process.env.PORT || 4000;
 //const dbConnString = `mongodb://localhost:27017/TaskManager${process.env.NODE_ENV === 'test' ? 'Test':''}`;
 const dbConnString = process.env.MONGODB_URI || 'mongodb://user:qwerty9@ds259001.mlab.com:59001/heroku_5lz8d8ll';
 const db = mongoose.connect(dbConnString, { useNewUrlParser: true })
-  .catch(e => {logger.error("DB connect: "+e.message)});  //Todo: Log this
+  .catch(e => {logger.error(e.message)});
 
 //Set the COR header to allow cross domain
 app.use((req,res,next) => {
@@ -34,7 +34,7 @@ app.use(morgan('dev',{
 app.use(bodyParser.json());
 // API routes
 app.use('/api', tasks);
-
+app.use(express.static('public'));
 // Running the server
 app.listen(port, () => {
 	logger.info(`Listening on: http://localhost:${port}`)

@@ -1,0 +1,176 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Task Manager
+  license:
+    name: MIT
+servers:
+  - url: https://shielded-retreat-82637.herokuapp.com/tasks.yml
+paths:
+  /tasks:
+    get:
+      summary: List all tasks
+      operationId: listTasks
+      responses:
+        '200':
+          description: An array of tasks
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/Tasks"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a task
+      operationId: createTasks
+      parameters:
+      - name: completed
+        in: query
+        description: completion mark
+        schema:
+          type: boolean
+        required: true
+      - name: name
+        in: query
+        description: task name
+        schema:
+          type: string
+        required: true
+      - name: due
+        in: query
+        description: due date
+        schema:
+          type: string
+        required: true
+      - name: description
+        in: query
+        description: descrtiption of the task
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Objected created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tasks/{taskId}:
+    put:
+      summary: Update a specific task
+      operationId: editTaskById
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: The id of the task to update
+          schema:
+            type: string
+        - name: completed
+          in: query
+          description: completion mark
+          schema:
+            type: boolean
+          required: true
+        - name: name
+          in: query
+          description: task name
+          schema:
+            type: string
+          required: true
+        - name: due
+          in: query
+          description: due date
+          schema:
+            type: string
+          required: true
+        - name: description
+          in: query
+          description: descrtiption of the task
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: the task to be updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: delete a specific task
+      operationId: deleteTaskById
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: The id of the task to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: the deleted task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Task:
+      required:
+        - completed
+        - name
+        - due
+        - description
+      properties:
+        id:
+          description: taskID
+          type: string
+        completed:
+          description: completion mark
+          type: boolean
+        name:
+          description: task name
+          type: string
+        due:
+          description: due date
+          type: string
+        description:
+          description: descrtiption of the task
+          type: string
+    Tasks:
+      type: array
+      items:
+        $ref: "#/components/schemas/Task"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
