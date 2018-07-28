@@ -9,8 +9,9 @@ const logger = require('./logger');
 const app = express();
 const port = process.env.PORT || 4000;
 // Connecting to the database
-const dbConnString = `mongodb://localhost:27017/TaskManager${process.env.NODE_ENV === 'test' ? 'Test':''}`;
-const db = mongoose.connect('mongodb://user:pass@ds259001.mlab.com:59001/heroku_5lz8d8ll', { useNewUrlParser: true })
+//const dbConnString = `mongodb://localhost:27017/TaskManager${process.env.NODE_ENV === 'test' ? 'Test':''}`;
+const dbConnString = process.env.MONGODB_URI || 'mongodb://user:pass@ds259001.mlab.com:59001/heroku_5lz8d8ll';
+const db = mongoose.connect(dbConnString, { useNewUrlParser: true })
 .catch(e => logger.error(e.message));  //Todo: Log this
 
 //Set the COR header to allow cross domain
