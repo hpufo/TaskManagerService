@@ -5,7 +5,7 @@ info:
   license:
     name: MIT
 servers:
-  - url: https://shielded-retreat-82637.herokuapp.com/tasks.yml
+  - url: https://shielded-retreat-82637.herokuapp.com/api/tasks
 paths:
   /tasks:
     get:
