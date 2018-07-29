@@ -10,7 +10,7 @@ const config = require('./db');
 const app = express();
 const port = process.env.PORT || 4000;
 
-const dbConnString = process.env.MONGODB_URI || `${config.DB}${process.env.NODE_ENV === 'test' ? 'Test':''}`;
+const dbConnString = process.env.NODE_ENV === 'test' ? config.TEST_DB:config.DB;
 const db = mongoose.connect(dbConnString, { useNewUrlParser: true })
   .catch(e => {logger.error(e.message)});
 
