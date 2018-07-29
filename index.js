@@ -5,12 +5,12 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const tasks = require('./routes/tasks');
 const logger = require('./logger');
+const config = require('./db');
 
 const app = express();
 const port = process.env.PORT || 4000;
-// Connecting to the database
-//const dbConnString = `mongodb://localhost:27017/TaskManager${process.env.NODE_ENV === 'test' ? 'Test':''}`;
-const dbConnString = process.env.MONGODB_URI || 'mongodb://user:qwerty9@ds259001.mlab.com:59001/heroku_5lz8d8ll';
+
+const dbConnString = process.env.MONGODB_URI || `${config.DB}${process.env.NODE_ENV === 'test' ? 'Test':''}`;
 const db = mongoose.connect(dbConnString, { useNewUrlParser: true })
   .catch(e => {logger.error(e.message)});
 
@@ -37,7 +37,7 @@ app.use('/api', tasks);
 app.use(express.static('public'));
 // Running the server
 app.listen(port, () => {
-	logger.info(`Listening on: http://localhost:${port}`)
+	logger.info(`Listening on new: http://localhost:${port}`)
 })
 
 module.exports = app; //for testing
