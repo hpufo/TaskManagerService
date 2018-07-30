@@ -12,3 +12,5 @@ Tests:
 In order to run tests you will need a local mongodb database. Add your db connection string to TEST_DB in config.js then you can run tests with "npm test"
 
 Note: My current docker-compose setup isn't working
+
+Technology used: NodeJS, Express, MongoDB, Mongoose, Mocha, Chai, Morgan, Winston, Docker, SwaggerUI, and Heroku for deployment
