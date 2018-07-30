@@ -12,7 +12,7 @@ const port = process.env.PORT || 4000;
 
 const dbConnString = process.env.NODE_ENV === 'test' ? config.TEST_DB:config.DB;
 const db = mongoose.connect(dbConnString, { useNewUrlParser: true })
-  .catch(e => {logger.error(e.message)});
+  .catch(e => logger.error(e.message));
 
 //Set the COR header to allow cross domain
 app.use((req,res,next) => {
