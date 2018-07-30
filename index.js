@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const tasks = require('./routes/tasks');
 const logger = require('./logger');
-const config = require('./db');
+const config = require('./config');
 
 const app = express();
 const port = process.env.PORT || 4000;
